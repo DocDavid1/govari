@@ -1,0 +1,36 @@
+# Render Blueprint — פורס אוטומטית מסד PostgreSQL + שרת שמגיש גם את האתר.
+# שימוש: ב-Render → New → Blueprint → חבר את הריפו. שאר המפתחות מוגדרים בדשבורד.
+
+databases:
+  - name: govari-db
+    plan: free
+    databaseName: govari
+    user: govari
+
+services:
+  - type: web
+    name: govari
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: govari-db
+          property: connectionString
+      - key: PGSSL
+        value: "true"
+      - key: OWNER_EMAIL
+        value: davidazulay75@gmail.com
+      - key: PAYMENT_PROVIDER
+        value: none
+      # --- להגדרה ידנית בדשבורד (Secret) ---
+      - key: SITE_URL          # לדוגמה https://govari.onrender.com ואז הדומיין שלך
+        sync: false
+      - key: RESEND_API_KEY    # ממשק Resend
+        sync: false
+      - key: FROM_EMAIL        # דוא"ל שולח בדומיין מאומת
+        sync: false

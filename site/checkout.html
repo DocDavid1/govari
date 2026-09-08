@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>השלמת הזמנה | גוב ארי מערכות</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>document.documentElement.setAttribute('data-theme','dark');</script>
+</head>
+<body>
+  <a href="#content" class="skip-link">דלג לתוכן</a>
+  <header class="site-header solid">
+    <nav class="nav container">
+      <a class="brand" href="index.html" aria-label="גוב ארי מערכות">
+        <img class="brand-logo" src="assets/images/logo-govari-mark.png" alt="גוב ארי מערכות — מערכות מצלמות רכב" />
+      </a>
+      <div class="nav-cta" style="margin-inline-start:auto">
+        <a class="nav-tel" href="tel:0536813013">053-6813013</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="section glow-top" style="padding-top:clamp(48px,6vw,80px)">
+      <div class="container">
+        <div class="section-head center reveal in" style="margin-bottom:clamp(28px,4vw,44px)">
+          <p class="eyebrow">פרטי הזמנה · ללא תשלום</p>
+          <h1 style="font-size:clamp(2rem,4.4vw,3rem)">שריון הזמנה</h1>
+          <p class="lead">מלאו את הפרטים ותקבלו אישור למייל — <b>בלי תשלום עכשיו</b>. ניצור קשר לתיאום, והתשלום מתבצע רק אחרי שתאשרו.</p>
+        </div>
+
+        <div class="order-grid">
+          <!-- טופס -->
+          <div>
+            <form id="checkoutForm" class="price-card" novalidate>
+              <h2 style="font-size:1.3rem;margin-bottom:1rem">הפרטים שלך</h2>
+              <div class="order-form">
+                <div class="field">
+                  <label for="name">שם מלא *</label>
+                  <input id="name" name="name" type="text" required placeholder="השם שלך" />
+                </div>
+                <div class="field">
+                  <label for="phone">טלפון *</label>
+                  <input id="phone" name="phone" type="tel" required placeholder="050-0000000" />
+                </div>
+                <div class="field">
+                  <label for="email">אימייל * (לשם יישלח אישור)</label>
+                  <input id="email" name="email" type="email" required placeholder="name@email.com" />
+                </div>
+                <div class="field">
+                  <label for="city">עיר</label>
+                  <input id="city" name="city" type="text" placeholder="עיר" />
+                </div>
+                <div class="field">
+                  <label for="address">כתובת למשלוח/התקנה</label>
+                  <input id="address" name="address" type="text" placeholder="רחוב ומספר" />
+                </div>
+                <div class="field">
+                  <label for="notes">הערות (לא חובה)</label>
+                  <textarea id="notes" name="notes" rows="2" placeholder="סוג רכב / זמן נוח"></textarea>
+                </div>
+                <label style="display:flex;gap:.5rem;align-items:flex-start;font-size:.9rem;color:var(--muted);cursor:pointer">
+                  <input type="checkbox" id="agreeTerms" style="margin-top:.25rem;flex:0 0 auto" />
+                  <span>קראתי ואני מסכים/ה ל<a href="terms.html" target="_blank" style="color:var(--gold-2)">תנאי השימוש</a> ול<a href="privacy.html" target="_blank" style="color:var(--gold-2)">מדיניות הפרטיות</a>, כולל מדיניות ההתקנה, האספקה, הביטול והאחריות.</span>
+                </label>
+                <div id="formError" style="display:none;color:#ff6b6b;font-size:.95rem"></div>
+                <button type="submit" id="submitBtn" class="btn btn-primary btn-block btn-lg">שליחת הזמנה — ללא תשלום</button>
+                <p style="color:var(--muted-2);font-size:.85rem;text-align:center;margin:0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"/></svg>
+                  ללא חיוב עכשיו · הפרטים נשמרים באופן מאובטח
+                </p>
+              </div>
+            </form>
+          </div>
+
+          <!-- סיכום -->
+          <div>
+            <div class="price-card">
+              <span class="price-flag">מבצע השקה</span>
+              <h2 style="font-size:1.2rem;margin:.4rem 0 1rem">סיכום הזמנה</h2>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.8rem">
+                <span>מצלמת רכב גוב ארי · 4 ערוצים</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+                <label for="qty" style="color:var(--muted)">כמות</label>
+                <div style="display:flex;align-items:center;gap:.5rem">
+                  <button type="button" id="qtyMinus" class="btn btn-ghost btn-sm" aria-label="פחות">−</button>
+                  <input id="qty" type="text" inputmode="numeric" value="1" readonly
+                         style="width:44px;text-align:center;padding:.5rem;border-radius:10px;background:var(--surface);border:1px solid var(--line-2);color:var(--text);font-weight:700" />
+                  <button type="button" id="qtyPlus" class="btn btn-ghost btn-sm" aria-label="עוד">+</button>
+                </div>
+              </div>
+              <div class="field" style="margin-bottom:.2rem">
+                <label for="coupon">קוד קופון</label>
+                <div style="display:flex;gap:.5rem">
+                  <input id="coupon" type="text" placeholder="יש לך קוד? הזן כאן" style="flex:1" />
+                  <button type="button" id="applyCoupon" class="btn btn-ghost btn-sm">החל</button>
+                </div>
+                <div id="couponMsg" style="font-size:.85rem;margin-top:.45rem"></div>
+              </div>
+              <div class="price" style="border-top:1px solid var(--line);padding-top:1rem">
+                <span id="totalOrig" style="text-decoration:line-through;color:var(--muted-2);font-size:1.2rem;margin-inline-end:.5rem;display:none"></span>
+                <span class="num" id="total">1,090</span><span class="cur">₪</span>
+              </div>
+              <p class="price-sub"><b style="color:var(--text)">אין חיוב עכשיו.</b> המחיר מוצג לשקיפות — לפרטי אספקה, אחריות ותשלום ניצור קשר.</p>
+              <ul class="incl" style="border-bottom:0;padding-bottom:0;margin-bottom:0">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> אישור מיידי למייל</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> התקנה עד בית הלקוח</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> תמיכה אישית בעברית</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> ניטור 24/7 · 4 ערוצים · 360°</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:0;margin-top:0;padding-top:0">
+        <span>© <span id="year"></span> גוב ארי מערכות. כל הזכויות שמורות.</span>
+        <span><a href="tel:0536813013" style="color:inherit">053-6813013</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    var UNIT = 1090;
+    var qty = 1;
+    var couponPercent = 0, couponCode = '';
+    var qtyEl = document.getElementById('qty');
+    var totalEl = document.getElementById('total');
+    var totalOrigEl = document.getElementById('totalOrig');
+    function render() {
+      qtyEl.value = qty;
+      var gross = UNIT * qty;
+      var net = Math.round(gross * (1 - couponPercent / 100));
+      totalEl.textContent = net.toLocaleString('he-IL');
+      if (couponPercent > 0) {
+        totalOrigEl.textContent = gross.toLocaleString('he-IL') + ' ₪';
+        totalOrigEl.style.display = 'inline';
+      } else {
+        totalOrigEl.style.display = 'none';
+      }
+    }
+    document.getElementById('qtyMinus').addEventListener('click', function () { if (qty > 1) { qty--; render(); } });
+    document.getElementById('qtyPlus').addEventListener('click', function () { if (qty < 20) { qty++; render(); } });
+
+    var couponInput = document.getElementById('coupon');
+    var couponMsg = document.getElementById('couponMsg');
+    document.getElementById('applyCoupon').addEventListener('click', async function () {
+      var code = (couponInput.value || '').trim();
+      if (!code) return;
+      couponMsg.textContent = 'בודק…'; couponMsg.style.color = 'var(--muted)';
+      try {
+        var r = await fetch('/api/coupon', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: code }) });
+        var d = await r.json();
+        if (d.ok) {
+          couponPercent = d.percent; couponCode = d.code;
+          couponMsg.textContent = 'קופון ' + d.code + ' הוחל — ' + d.percent + '% הנחה';
+          couponMsg.style.color = '#3ad07f';
+        } else {
+          couponPercent = 0; couponCode = '';
+          couponMsg.textContent = 'קוד קופון לא תקין';
+          couponMsg.style.color = '#ff6b6b';
+        }
+      } catch (e) {
+        couponMsg.textContent = 'לא ניתן לבדוק כעת — ודא שהשרת פועל';
+        couponMsg.style.color = '#ff6b6b';
+      }
+      render();
+    });
+
+    var form = document.getElementById('checkoutForm');
+    var errEl = document.getElementById('formError');
+    var btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errEl.style.display = 'none';
+      if (!document.getElementById('agreeTerms').checked) {
+        errEl.textContent = 'יש לאשר את תנאי השימוש כדי להמשיך.';
+        errEl.style.display = 'block';
+        return;
+      }
+      var payload = {
+        quantity: qty,
+        coupon: couponCode,
+        customer: {
+          name: form.name.value.trim(),
+          phone: form.phone.value.trim(),
+          email: form.email.value.trim(),
+          city: form.city.value.trim(),
+          address: form.address.value.trim(),
+          notes: form.notes.value.trim(),
+        },
+      };
+      btn.disabled = true; btn.textContent = 'שולח…';
+      try {
+        var res = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        var data = await res.json();
+        if (!res.ok || !data.ok) {
+          throw new Error((data.errors && data.errors.join(' · ')) || 'שגיאה בשליחה');
+        }
+        // מעבר לדף תשלום (אם יש סליקה) או לעמוד תודה
+        window.location.href = data.redirectUrl || ('/order-success.html?order=' + data.orderId);
+      } catch (err) {
+        var msg = err.message || 'שגיאה';
+        if (/fetch|network/i.test(msg)) {
+          msg = 'לא ניתן להתחבר לשרת. ודאו שהשרת פועל (npm start) ושאתם גולשים דרך כתובת השרת (למשל http://localhost:3000/checkout.html) — לא כקובץ.';
+        }
+        errEl.textContent = msg;
+        errEl.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'שליחת הזמנה — ללא תשלום';
+      }
+    });
+  </script>
+</body>
+</html>

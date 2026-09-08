@@ -1,0 +1,14 @@
+# קבצי מקור כבדים / לא נחוצים לפריסה (כבר מעובדים לתוך site/assets)
+19452742-hd_1080_1920_60fps.mp4
+88921-608445975.mp4
+WhatsApp Image*
+מצלמה עם אחורי.png
+content/
+.claude/
+server/data/
+render.yaml
+CLAUDE.md
+DEPLOY.md
+supabase/
+*.log
+.DS_Store

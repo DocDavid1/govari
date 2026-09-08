@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.*
+server/data/orders.json
+.vercel
+supabase/.temp/
+supabase/.branches/
+*.log
+.DS_Store
+
+# קבצי מקור כבדים — כבר מעובדים לתוך site/assets/ (תואם ל-.vercelignore)
+19452742-hd_1080_1920_60fps.mp4
+88921-608445975.mp4
+WhatsApp Image*
+מצלמה עם אחורי.png

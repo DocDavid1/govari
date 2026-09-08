@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(supabase link *)",
+      "Bash(vercel project *)",
+      "Bash(vercel link *)",
+      "Bash(vercel deploy *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://govari.vercel.app/health)",
+      "Bash(curl -s https://govari.vercel.app/health)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}  %{content_type}  %{size_download} bytes\\\\n\" https://govari.vercel.app/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://govari.vercel.app/checkout.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://govari.vercel.app/assets/videos/hero-video.mp4)",
+      "Bash(vercel env *)",
+      "Bash(curl -s -X POST https://govari.vercel.app/api/orders -H 'Content-Type: application/json' -d '{\"quantity\":1,\"customer\":{\"fullName\":\"בדיקה טכנית\",\"email\":\"meyer2615@gmail.com\",\"phone\":\"0500000000\",\"address\":\"רחוב הבדיקה 1\",\"city\":\"תל אביב\"}}' -w '\\\\n--- HTTP %{http_code}\\\\n')",
+      "Bash(curl -s -X POST https://govari.vercel.app/api/orders -H 'Content-Type: application/json' -d '{\"quantity\":1,\"customer\":{\"name\":\"בדיקה טכנית\",\"email\":\"meyer2615@gmail.com\",\"phone\":\"0500000000\",\"address\":\"רחוב הבדיקה 1\",\"city\":\"תל אביב\"}}' -w '\\\\n--- HTTP %{http_code}\\\\n')",
+      "Bash(python3 -)",
+      "Bash(sips -g pixelWidth -g pixelHeight logo-cut.png)",
+      "Bash(sips -Z 500 cut-on-white.png --out cw.png)",
+      "Bash(sips -Z 500 cut-on-dark.png --out cd.png)"
+    ]
+  }
+}
