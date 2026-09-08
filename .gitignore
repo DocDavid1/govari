@@ -1,7 +1,8 @@
 node_modules/
 .env
 .env.*
-server/data/orders.json
+server/data/*.json
+server/data/*.tmp
 .vercel
 supabase/.temp/
 supabase/.branches/

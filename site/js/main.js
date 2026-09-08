@@ -107,6 +107,41 @@
 
   // מצב כהה בלבד — הוסר מתג יום/לילה (פלטת שחור·זהב אחת)
 
+  // ===== רצועת CTA דביקה במובייל =====
+  (function stickyCta() {
+    var bar = document.getElementById('stickyCta');
+    if (!bar) return;
+    document.body.classList.add('has-sticky-cta');
+    var leadEl = document.getElementById('lead');
+    var hero = document.querySelector('.hero');
+
+    function update() {
+      // מסתירים כשהטופס הראשי נראה, או לפני שגללנו מעבר להירו
+      var pastHero = hero ? (hero.getBoundingClientRect().bottom < 40) : (window.scrollY > 260);
+      var leadVisible = false;
+      if (leadEl) {
+        var r = leadEl.getBoundingClientRect();
+        leadVisible = r.top < window.innerHeight * 0.85 && r.bottom > 60;
+      }
+      bar.classList.toggle('is-hidden', !pastHero || leadVisible);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    bar.querySelectorAll('a[href="#lead"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.govariTrack) window.govariTrack('sticky_cta_click');
+      });
+    });
+  })();
+
+  // ===== מעקב קליקים על טלפון / וואטסאפ =====
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href*="wa.me"]');
+    if (!a || !window.govariTrack) return;
+    window.govariTrack(a.href.indexOf('tel:') === 0 ? 'phone_click' : 'whatsapp_click');
+  });
+
   // ===== חלון המרה — exit-intent + טיימר + גלילה, פעם אחת לביקור =====
   (function ctaModal() {
     var seen = false;
@@ -123,15 +158,14 @@
         '<button class="cta-modal-close" data-close aria-label="סגירה">×</button>' +
         '<div class="cta-modal-banner"><img src="assets/images/hero-bg.webp" alt="מצלמת גוב ארי"></div>' +
         '<div class="cta-modal-body">' +
-          '<span class="cta-modal-flag">ללא תשלום עכשיו</span>' +
-          '<h3>הדגם שנחת השבוע בישראל</h3>' +
-          '<p class="cta-modal-sub">4 ערוצים, כיסוי 360° וחיבור 4G. משאירים פרטים בלי לשלם — נחזור אליכם לתיאום.</p>' +
-          '<div class="cta-modal-price">1,090 <span class="cur">₪</span></div>' +
+          '<span class="cta-modal-flag">ללא תשלום וללא התחייבות</span>' +
+          '<h3>רוצה לשמוע פרטים?</h3>' +
+          '<p class="cta-modal-sub">4 ערוצים, כיסוי 360° וחיבור 4G. השאירו שם ומספר — נציג של גוב ארי יחזור אליכם ויבדוק התאמה.</p>' +
           '<div class="cta-modal-actions">' +
-            '<a class="btn btn-primary btn-block btn-lg" href="checkout.html">להזמנה — ללא תשלום</a>' +
-            '<a class="btn btn-ghost btn-block" href="https://wa.me/972536813013" target="_blank" rel="noopener">שאלה מהירה? וואטסאפ</a>' +
+            '<a class="btn btn-primary btn-block btn-lg" href="#lead" data-close>אני רוצה שיחזרו אליי</a>' +
+            '<a class="btn btn-ghost btn-block" href="https://wa.me/972536813013" target="_blank" rel="noopener">שאלה מהירה בוואטסאפ</a>' +
           '</div>' +
-          '<p class="cta-modal-trust">0 ₪ בהזמנה · ללא כרטיס אשראי · אישור מיידי למייל</p>' +
+          '<p class="cta-modal-trust">בלי כרטיס אשראי · בלי התחייבות · נחזור אליכם בהקדם</p>' +
         '</div>' +
       '</div>';
     document.body.appendChild(modal);
@@ -174,7 +208,7 @@
     t.setAttribute('role', 'status');
     t.innerHTML =
       '<svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 9 2 5.5 5.2 5.5c1.9 0 3 1 3.8 2 .8-1 1.9-2 3.8-2C16 5.5 17.5 9 15.5 12.5 13 16.65 12 21 12 21z"/></svg>' +
-      '<span><b>10% מכל רכישה</b> נתרמים ללוחמי ופצועי צה"ל. <a href="index.html#donation" style="color:#fff;text-decoration:underline">לפרטים</a></span>' +
+      '<span><b>10% מהרווח על כל רכישה</b> נתרמים ללוחמים ולפצועי צה"ל. <a href="index.html#donation" style="color:#fff;text-decoration:underline">לפרטים</a></span>' +
       '<button class="dt-close" aria-label="סגירה">×</button>';
     document.body.appendChild(t);
     setTimeout(function () { t.classList.add('show'); }, 4000);

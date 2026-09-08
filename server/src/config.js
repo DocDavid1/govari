@@ -1,18 +1,44 @@
 import 'dotenv/config';
 
+const bool = (v, def = false) => (v == null || v === '' ? def : String(v) === 'true');
+
 export const config = {
   port: parseInt(process.env.PORT || '3000', 10),
-  siteUrl: process.env.SITE_URL || 'http://localhost:3000',
-  serveSite: (process.env.SERVE_SITE || 'true') === 'true',
+  siteUrl: (process.env.SITE_URL || 'http://localhost:3000').replace(/\/$/, ''),
+  serveSite: bool(process.env.SERVE_SITE, true),
+  env: process.env.NODE_ENV || 'development',
 
   databaseUrl: process.env.DATABASE_URL || '',
-  pgSsl: (process.env.PGSSL || 'true') === 'true',
+  pgSsl: bool(process.env.PGSSL, true),
+
+  // מלח לגיבוב IP (לא שומרים IP גולמי). ברירת מחדל חלשה — הגדר בפרודקשן.
+  ipHashSalt: process.env.IP_HASH_SALT || 'govari-dev-salt',
 
   email: {
     resendApiKey: process.env.RESEND_API_KEY || '',
-    from: `${process.env.FROM_NAME || 'גוב ארי מערכות'} <${process.env.FROM_EMAIL || 'orders@example.com'}>`,
+    from: `${process.env.FROM_NAME || 'גוב ארי מערכות'} <${process.env.FROM_EMAIL || 'onboarding@resend.dev'}>`,
     ownerEmail: process.env.OWNER_EMAIL || 'davidazulay75@gmail.com',
   },
+
+  // Meta Conversions API (server-side). ריק = מדלגים (הפיקסל בדפדפן עדיין עובד).
+  meta: {
+    pixelId: process.env.META_PIXEL_ID || '',
+    capiToken: process.env.META_CAPI_TOKEN || '',
+    testEventCode: process.env.META_TEST_EVENT_CODE || '',
+    graphVersion: process.env.META_GRAPH_VERSION || 'v21.0',
+  },
+
+  // ממשק אדמין (/admin/leads) — Basic Auth. ריק = האדמין כבוי (משתמשים בדשבורד Supabase).
+  admin: {
+    user: process.env.ADMIN_USER || '',
+    password: process.env.ADMIN_PASSWORD || '',
+  },
+
+  // סוד להפעלת ה-outbox מבחוץ (Vercel Cron / cron-job.org). ריק בפרודקשן = הגנה רק דרך Cron header.
+  outboxTickSecret: process.env.OUTBOX_TICK_SECRET || '',
+
+  // גיבוי אופציונלי ל-Google Sheet (Apps Script Web App URL). לעולם לא מקור אמת.
+  sheetWebhookUrl: process.env.SHEET_WEBHOOK_URL || '',
 
   payment: {
     provider: process.env.PAYMENT_PROVIDER || 'none',
@@ -29,10 +55,9 @@ export const config = {
   },
 };
 
-export function emailEnabled() {
-  return Boolean(config.email.resendApiKey);
-}
-
-export function paymentEnabled() {
-  return config.payment.provider && config.payment.provider !== 'none';
-}
+export const usePg = () => Boolean(config.databaseUrl);
+export const emailEnabled = () => Boolean(config.email.resendApiKey);
+export const metaCapiEnabled = () => Boolean(config.meta.pixelId && config.meta.capiToken);
+export const adminEnabled = () => Boolean(config.admin.user && config.admin.password);
+export const sheetBackupEnabled = () => Boolean(config.sheetWebhookUrl);
+export const paymentEnabled = () => config.payment.provider && config.payment.provider !== 'none';

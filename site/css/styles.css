@@ -412,3 +412,73 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .skip-link{position:absolute;inset-inline-start:-9999px;top:0;z-index:200;background:var(--gold-grad);
   color:var(--gold-ink);padding:.7rem 1.2rem;border-radius:0 0 10px 0;font-weight:800}
 .skip-link:focus{inset-inline-start:0}
+
+/* ============================================================
+   טופס ליד (שם + טלפון → חוזרים אליך). מובייל-קודם.
+   ============================================================ */
+.lead-card{background:linear-gradient(180deg,var(--surface),var(--bg-2));
+  border:1px solid var(--line-2);border-radius:var(--radius-lg);padding:1.4rem;
+  box-shadow:var(--shadow);max-width:440px}
+.lead-card h3{font-size:1.15rem;margin:0 0 .25rem}
+.lead-card .lead-sub{color:var(--muted);font-size:.92rem;margin:0 0 1rem}
+.lead-form{display:grid;gap:.75rem}
+.lead-form .field input{width:100%;padding:1rem 1.1rem;border-radius:var(--radius-sm);
+  background:var(--surface);border:1px solid var(--line-2);color:var(--text);
+  font-family:inherit;font-size:1.05rem;min-height:52px}
+.lead-form .field input:focus{outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(231,200,119,.22)}
+.lead-form .field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:.35rem}
+.lead-form .btn{min-height:54px;font-size:1.08rem}
+.lead-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.lead-reassure{display:flex;align-items:center;gap:.45rem;color:var(--muted);
+  font-size:.86rem;margin:.15rem 0 0;justify-content:center}
+.lead-reassure svg{width:15px;height:15px;stroke:var(--gold-2);flex:0 0 auto}
+[data-lead-status]{border-radius:12px}
+.lead-success{animation:fadeUp .5s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* הירו במבנה ליד — עמודת טקסט+מוצר | כרטיס טופס */
+.hero-lead .hero-split{grid-template-columns:1.05fr .95fr;align-items:center}
+.hero-lead .hero-col{display:flex;flex-direction:column;gap:1.4rem}
+.hero-lead .hero-media{margin:0}
+.hero-lead .hero-media img{max-width:460px;border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+.hero-lead .lead-card{width:100%;margin-inline-start:auto}
+@media(max-width:920px){
+  .hero-lead .hero-split{grid-template-columns:1fr;gap:1.6rem}
+  .hero-lead .hero-col{align-items:center;text-align:center}
+  .hero-lead .hero-media{order:2;max-width:420px}
+  .hero-lead .feature-list{text-align:start}
+  .hero-lead .lead-card{order:3;margin-inline:auto;max-width:440px}
+}
+
+/* ============================================================
+   3 צעדים — מה קורה אחרי שמשאירים פרטים
+   ============================================================ */
+.steps-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;counter-reset:step}
+.step-c{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.6rem 1.4rem;position:relative}
+.step-c::before{counter-increment:step;content:counter(step);display:grid;place-items:center;
+  width:38px;height:38px;border-radius:50%;background:var(--gold-grad);color:var(--gold-ink);
+  font-weight:900;font-size:1.05rem;margin-bottom:.9rem}
+.step-c h3{font-size:1.1rem;margin:0 0 .35rem}
+.step-c p{margin:0;font-size:.95rem}
+@media(max-width:760px){.steps-3{grid-template-columns:1fr}}
+
+/* ============================================================
+   רצועת CTA דביקה במובייל — "השאירו פרטים"
+   ============================================================ */
+.sticky-cta{position:fixed;inset-inline:0;bottom:0;z-index:95;display:none;
+  align-items:center;gap:.6rem;padding:.7rem .9rem;
+  padding-bottom:calc(.7rem + env(safe-area-inset-bottom,0));
+  background:rgba(8,8,10,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line-2)}
+.sticky-cta .btn{flex:1;min-height:48px}
+.sticky-cta .sc-wa,.sticky-cta .sc-tel{display:grid;place-items:center;width:48px;height:48px;
+  border-radius:12px;flex:0 0 auto;border:1px solid var(--line-2);color:var(--gold-2)}
+.sticky-cta .sc-wa{color:#25d366;border-color:rgba(37,211,102,.5);background:rgba(37,211,102,.12)}
+.sticky-cta .sc-wa svg,.sticky-cta .sc-tel svg{width:22px;height:22px}
+@media(max-width:760px){
+  .sticky-cta{display:flex}
+  body.has-sticky-cta{padding-bottom:76px}
+  .order-bar{display:none}
+}
+.sticky-cta.is-hidden{transform:translateY(110%);transition:transform .3s var(--ease)}

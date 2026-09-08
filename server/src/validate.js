@@ -15,7 +15,7 @@ export function validateOrderInput(body) {
 
   if (name.length < 2) errors.push('שם מלא חסר או קצר מדי');
   if (!PHONE_RE.test(phone)) errors.push('מספר טלפון לא תקין');
-  if (!EMAIL_RE.test(email)) errors.push('כתובת אימייל לא תקינה');
+  if (email && !EMAIL_RE.test(email)) errors.push('כתובת אימייל לא תקינה'); // אימייל אופציונלי
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
     errors.push('כמות לא תקינה');
   }

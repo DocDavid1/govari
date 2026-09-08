@@ -8,6 +8,8 @@
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/styles.css" />
   <script>document.documentElement.setAttribute('data-theme','dark');</script>
+  <script src="js/config.js"></script>
+  <script src="js/track.js"></script>
 </head>
 <body>
   <a href="#content" class="skip-link">דלג לתוכן</a>
@@ -17,7 +19,7 @@
         <img class="brand-logo" src="assets/images/logo-govari-mark.png" alt="גוב ארי מערכות — מערכות מצלמות רכב" />
       </a>
       <div class="nav-cta" style="margin-inline-start:auto">
-        <a class="nav-tel" href="tel:0536813013">053-6813013</a>
+        <a class="nav-tel" href="tel:+972536813013">053-6813013</a>
       </div>
     </nav>
   </header>
@@ -27,7 +29,7 @@
       <div class="container">
         <div class="section-head center reveal in" style="margin-bottom:clamp(28px,4vw,44px)">
           <p class="eyebrow">פרטי הזמנה · ללא תשלום</p>
-          <h1 style="font-size:clamp(2rem,4.4vw,3rem)">שריון הזמנה</h1>
+          <h1 style="font-size:clamp(2rem,4.4vw,3rem)">פרטי הזמנה</h1>
           <p class="lead">מלאו את הפרטים ותקבלו אישור למייל — <b>בלי תשלום עכשיו</b>. ניצור קשר לתיאום, והתשלום מתבצע רק אחרי שתאשרו.</p>
         </div>
 
@@ -46,8 +48,8 @@
                   <input id="phone" name="phone" type="tel" required placeholder="050-0000000" />
                 </div>
                 <div class="field">
-                  <label for="email">אימייל * (לשם יישלח אישור)</label>
-                  <input id="email" name="email" type="email" required placeholder="name@email.com" />
+                  <label for="email">אימייל <span style="opacity:.6">(לא חובה — לאישור בכתב)</span></label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="name@email.com" />
                 </div>
                 <div class="field">
                   <label for="city">עיר</label>
@@ -122,7 +124,7 @@
     <div class="container">
       <div class="footer-bottom" style="border-top:0;margin-top:0;padding-top:0">
         <span>© <span id="year"></span> גוב ארי מערכות. כל הזכויות שמורות.</span>
-        <span><a href="tel:0536813013" style="color:inherit">053-6813013</a></span>
+        <span><a href="tel:+972536813013" style="color:inherit">053-6813013</a></span>
       </div>
     </div>
   </footer>
@@ -210,6 +212,7 @@
         if (!res.ok || !data.ok) {
           throw new Error((data.errors && data.errors.join(' · ')) || 'שגיאה בשליחה');
         }
+        try { if (window.govariTrack) window.govariTrack('lead_submit_success', { form: 'checkout' }, { eventId: data.orderId }); } catch (e) {}
         // מעבר לדף תשלום (אם יש סליקה) או לעמוד תודה
         window.location.href = data.redirectUrl || ('/order-success.html?order=' + data.orderId);
       } catch (err) {
