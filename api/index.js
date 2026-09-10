@@ -3,11 +3,13 @@
 import app from '../server/app.js';
 import { initDb } from '../server/src/orders.js';
 import { initLeads } from '../server/src/leads.js';
+import { warnInsecureConfig } from '../server/src/config.js';
 
 let ready = null;
 
 export default async function handler(req, res) {
   if (!ready) {
+    warnInsecureConfig();
     ready = Promise.allSettled([initDb(), initLeads()]).then((results) => {
       results.forEach((r) => r.status === 'rejected' && console.error('[init]', r.reason));
     });

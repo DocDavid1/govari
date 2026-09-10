@@ -1,10 +1,11 @@
 // הרצה מקומית: מאתחל מסד + סכימת לידים ומריץ שרת שמגיש גם את האתר.
 // (בפרודקשן ב-Vercel משתמשים ב-api/index.js במקום קובץ זה.)
 import app from './app.js';
-import { config, emailEnabled, paymentEnabled, metaCapiEnabled, adminEnabled, usePg } from './src/config.js';
+import { config, emailEnabled, paymentEnabled, metaCapiEnabled, adminEnabled, usePg, warnInsecureConfig } from './src/config.js';
 import { initDb } from './src/orders.js';
 import { initLeads } from './src/leads.js';
 
+warnInsecureConfig();
 Promise.allSettled([initDb(), initLeads()])
   .then((results) => {
     results.forEach((r) => r.status === 'rejected' && console.error('[init]', r.reason));

@@ -113,15 +113,25 @@ export async function sendMetaCapi(lead, submission) {
     }],
   };
   if (testEventCode) body.test_event_code = testEventCode;
+  body.access_token = capiToken; // בגוף ה-POST, לא ב-query — כדי שלא ידלוף ללוגים/שגיאות
 
-  const url = `https://graph.facebook.com/${graphVersion}/${pixelId}/events?access_token=${encodeURIComponent(capiToken)}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+  const url = `https://graph.facebook.com/${graphVersion}/${pixelId}/events`;
+  let res;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  } catch (e) {
+    throw new Error(`Meta CAPI network error: ${e.code || e.name || 'fetch failed'}`); // בלי URL/טוקן
+  }
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(`Meta CAPI ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
+  if (!res.ok) {
+    // מנקים כל token שמוחזר בטעות בגוף התשובה
+    const safe = JSON.stringify(json).replace(/"access_token":"[^"]*"/g, '"access_token":"***"').slice(0, 300);
+    throw new Error(`Meta CAPI ${res.status}: ${safe}`);
+  }
   return json;
 }
 

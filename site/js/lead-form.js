@@ -112,8 +112,12 @@
       if (el) { try { el.focus(); } catch (e) {} }
     }
 
-    function showSuccess(deduped) {
-      track('lead_submit_success', { form: form.dataset.leadForm || 'lead' }, { eventId: form.__eventId });
+    // eventId = מזהה ההגשה מהשרת. הוא זהה למזהה שבו משתמש ה-CAPI בצד השרת →
+    // Meta מבצע דדופ בין אירוע הדפדפן לאירוע השרת. fireLead=false ל-honeypot.
+    function showSuccess(deduped, eventId, fireLead) {
+      if (fireLead !== false && eventId) {
+        track('lead_submit_success', { form: form.dataset.leadForm || 'lead' }, { eventId: eventId });
+      }
       var waText = 'היי, השארתי פרטים באתר גוב ארי ואשמח שתחזרו אליי. שם: ' + (values().full_name || '');
       var box = document.createElement('div');
       box.className = 'lead-success';
@@ -142,14 +146,12 @@
 
     async function send(v, attempt) {
       attempt = attempt || 1;
-      form.__eventId = form.__eventId || uuid();
       var payload = {
         full_name: v.full_name,
         phone: v.phone,
         city: v.city || undefined,
         company: v.company || undefined,
         idempotency_key: idemKey,
-        event_id: form.__eventId,
         attribution: (window.govariAttribution ? window.govariAttribution() : {}),
       };
 
@@ -168,7 +170,7 @@
         var data = {};
         try { data = await res.json(); } catch (e) {}
 
-        if (res.ok && data.ok) { lock(false); showSuccess(data.deduped); return; }
+        if (res.ok && data.ok) { lock(false); showSuccess(data.deduped, data.eventId, true); return; }
 
         if (res.status === 400 && data.errors) {
           lock(false);
@@ -216,7 +218,7 @@
       hideStatus();
       var v = values();
 
-      if (v.company) { showSuccess(false); return; } // honeypot — "הצלחה" מדומה
+      if (v.company) { showSuccess(false, null, false); return; } // honeypot — UI מדומה, בלי אירוע Lead
       if (!validate(v)) return;
 
       lock(true);

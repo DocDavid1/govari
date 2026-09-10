@@ -444,11 +444,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .hero-lead .hero-media img{max-width:460px;border-radius:var(--radius-lg);box-shadow:var(--shadow)}
 .hero-lead .lead-card{width:100%;margin-inline-start:auto}
 @media(max-width:920px){
-  .hero-lead .hero-split{grid-template-columns:1fr;gap:1.6rem}
-  .hero-lead .hero-col{align-items:center;text-align:center}
-  .hero-lead .hero-media{order:2;max-width:420px}
-  .hero-lead .feature-list{text-align:start}
-  .hero-lead .lead-card{order:3;margin-inline:auto;max-width:440px}
+  /* מובייל: כותרת → טופס → תמונה → נקודות. הטופס קרוב לראש המסך. */
+  .hero-lead .hero-split{grid-template-columns:1fr;gap:1.4rem}
+  .hero-lead .hero-col{display:contents}
+  .hero-lead .hero-text{order:1;text-align:center}
+  .hero-lead .lead-card{order:2;margin-inline:auto;max-width:440px;width:100%}
+  .hero-lead .hero-media{order:3;max-width:380px;margin-inline:auto}
+  .hero-lead .hero-text .feature-list{display:none} /* חוזרות ב-PILLS מיד מתחת */
+}
+@media(max-width:920px) and (min-width:560px){
+  .hero-lead .hero-text .feature-list{display:grid;text-align:start;max-width:440px;margin-inline:auto}
 }
 
 /* ============================================================

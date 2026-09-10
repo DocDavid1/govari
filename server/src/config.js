@@ -55,6 +55,18 @@ export const config = {
   },
 };
 
+// אזהרות תצורה לפרודקשן — נקרא פעם אחת באתחול. לא חושף סודות.
+export function warnInsecureConfig() {
+  const prod = config.env === 'production' || Boolean(process.env.VERCEL);
+  const warn = (m) => console.warn(`[config] ⚠️  ${m}`);
+  if (!config.databaseUrl) warn('DATABASE_URL חסר — לידים נשמרים לקובץ JSON ארעי. לא לפרודקשן.');
+  if (prod && config.ipHashSalt === 'govari-dev-salt') warn('IP_HASH_SALT הוא ברירת המחדל — הגדר מחרוזת אקראית.');
+  if (prod && !config.email.resendApiKey) warn('RESEND_API_KEY חסר — התראות ליד לא יישלחו (ימתינו ב-outbox).');
+  if (prod && config.meta.pixelId && !config.meta.capiToken) warn('META_PIXEL_ID מוגדר אך META_CAPI_TOKEN חסר — אין Lead צד-שרת.');
+  if (prod && config.meta.testEventCode) warn('META_TEST_EVENT_CODE מוגדר בפרודקשן — אירועים ילכו ל-Test Events בלבד.');
+  if (prod && config.serveSite) warn('SERVE_SITE=true בפרודקשן — ב-Vercel האתר אמור להיות סטטי (false).');
+}
+
 export const usePg = () => Boolean(config.databaseUrl);
 export const emailEnabled = () => Boolean(config.email.resendApiKey);
 export const metaCapiEnabled = () => Boolean(config.meta.pixelId && config.meta.capiToken);
