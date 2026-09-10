@@ -9,12 +9,13 @@
   /* זהב מטאלי — האקצנט הראשי של המותג */
   --gold:#c9a24e; --gold-2:#e7c877; --gold-3:#f4e2b3; --gold-ink:#1a1408;
   --gold-grad:linear-gradient(135deg,#f4e2b3 0%,#e7c877 34%,#c9a24e 68%,#a9822f 100%);
-  /* אדום — שמור לחיווי "מקליט/התראה" בלבד */
+  /* אדום — אקצנט ה-CTA וחיווי "מקליט/התראה" */
   --red:#e11623; --red-2:#ff2d3b; --red-ink:#3a0a0e;
+  --red-grad:linear-gradient(135deg,#ff2d3b 0%,#e11623 55%,#b3101b 100%);
   --radius:20px; --radius-sm:12px; --radius-lg:28px;
   --shadow:0 30px 80px rgba(0,0,0,.5);
   --shadow-gold:0 18px 50px rgba(201,162,78,.30);
-  --shadow-red:var(--shadow-gold);
+  --shadow-red:0 18px 50px rgba(225,22,35,.34);
   --container:1180px; --gutter:24px;
   --space:clamp(72px,9vw,140px);
   --font:'Heebo',system-ui,'Segoe UI',Arial,sans-serif;
@@ -46,9 +47,9 @@ p{margin:0 0 1rem;color:var(--muted)}
   border:1px solid transparent;cursor:pointer;transition:transform .25s var(--ease),
   box-shadow .25s var(--ease),background .25s var(--ease),border-color .25s var(--ease)}
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--gold-grad);color:var(--gold-ink);font-weight:800;
-  box-shadow:var(--shadow-gold),inset 0 1px 0 rgba(255,255,255,.45)}
-.btn-primary:hover{box-shadow:0 26px 70px rgba(201,162,78,.46),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn-primary{background:var(--red-grad);color:#fff;font-weight:800;
+  box-shadow:var(--shadow-red),inset 0 1px 0 rgba(255,255,255,.28)}
+.btn-primary:hover{box-shadow:0 26px 70px rgba(225,22,35,.5),inset 0 1px 0 rgba(255,255,255,.4)}
 .btn-gold{background:var(--gold-grad);color:var(--gold-ink);font-weight:800;
   box-shadow:var(--shadow-gold),inset 0 1px 0 rgba(255,255,255,.45)}
 .btn-ghost{border-color:var(--line-2);color:var(--text);background:rgba(231,200,119,.05)}
@@ -58,9 +59,10 @@ p{margin:0 0 1rem;color:var(--muted)}
 .btn-block{width:100%}
 
 /* ===== Header ===== */
-.site-header{position:sticky;top:0;z-index:100;transition:background .3s,border-color .3s,backdrop-filter .3s}
-.site-header.scrolled{background:rgba(8,8,10,.72);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line)}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);
+  border-bottom:1px solid var(--line);transition:background .3s,border-color .3s,box-shadow .3s}
+.site-header.scrolled{background:var(--bg);border-bottom:1px solid var(--line-2);
+  box-shadow:0 12px 40px rgba(0,0,0,.5)}
 /* היידר אטום קבוע (עמודי צ'קאאוט/תודה — ללא אפקט שקיפות מעל תוכן) */
 .site-header.solid{background:var(--bg);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:1.5rem;padding:.85rem 0}
