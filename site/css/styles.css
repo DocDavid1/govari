@@ -241,6 +241,7 @@ p{margin:0 0 1rem;color:var(--muted)}
 .site-footer a:hover{color:var(--text)}
 .footer-bottom{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;color:var(--muted-2);font-size:.88rem}
+.footer-bottom .build-tag{opacity:.6;font-variant-numeric:tabular-nums;letter-spacing:.02em}
 
 /* ===== Reveal ===== */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
